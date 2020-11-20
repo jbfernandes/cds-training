@@ -1,0 +1,14 @@
+PROCEDURE "training.procedures::DefinirNovoPrecoMassivamenteProc"( 
+	IN P_PERCENT DECIMAL
+)
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER
+
+AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   UPDATE TRAINING_PRODUCTS_TBLPRODUCTS
+   SET SALESPRICE = SALESPRICE * :P_PERCENT;
+END
