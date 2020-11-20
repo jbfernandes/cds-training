@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="ProductsByClientView" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ProductsByClientView"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="TRAINING_CLIENTS_TBLCLIENT">
+    <resourceUri>TRAINING_CLIENTS_TBLCLIENT</resourceUri>
+  </DataSource>
+  <DataSource id="TRAINING_SALESORDER_TBLSALESORDER">
+    <resourceUri>TRAINING_SALESORDER_TBLSALESORDER</resourceUri>
+  </DataSource>
+  <DataSource id="TRAINING_SALESORDER_TBLSALESORDERITEM">
+    <resourceUri>TRAINING_SALESORDER_TBLSALESORDERITEM</resourceUri>
+  </DataSource>
+  <DataSource id="TRAINING_PRODUCTS_TBLPRODUCTS">
+    <resourceUri>TRAINING_PRODUCTS_TBLPRODUCTS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Client">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TRAINING_CLIENTS_TBLCLIENT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="SalesOrder">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="USER_ID"/>
+      <viewAttribute id="CLIENT_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TRAINING_SALESORDER_TBLSALESORDER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="SalesOrderItem">
+    <viewAttributes>
+      <viewAttribute id="SALESORDER_ID"/>
+      <viewAttribute id="PRODUCT_ID"/>
+      <viewAttribute id="QUANTITY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TRAINING_SALESORDER_TBLSALESORDERITEM"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Product">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="NAME"/>
+      <viewAttribute id="MANUFACTURER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TRAINING_PRODUCTS_TBLPRODUCTS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="NAME"/>
+      <viewAttribute id="ID_1"/>
+      <viewAttribute id="USER_ID"/>
+      <viewAttribute id="CLIENT_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Client">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+    </input>
+    <input node="SalesOrder">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID_1" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT_ID" source="CLIENT_ID"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2">
+    <viewAttributes>
+      <viewAttribute id="SALESORDER_ID"/>
+      <viewAttribute id="PRODUCT_ID"/>
+      <viewAttribute id="QUANTITY"/>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="NAME"/>
+      <viewAttribute id="MANUFACTURER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="SalesOrderItem">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDER_ID" source="SALESORDER_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+    </input>
+    <input node="Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANUFACTURER" source="MANUFACTURER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3">
+    <viewAttributes>
+      <viewAttribute id="SALESORDER_ID"/>
+      <viewAttribute id="PRODUCT_ID"/>
+      <viewAttribute id="QUANTITY"/>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="NAME"/>
+      <viewAttribute id="MANUFACTURER"/>
+    
+      <viewAttribute id="ID_1"/>
+      <viewAttribute id="NAME_1"/>
+      <viewAttribute id="ID_1_1"/>
+      <viewAttribute id="USER_ID"/>
+      <viewAttribute id="CLIENT_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDER_ID" source="SALESORDER_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANUFACTURER" source="MANUFACTURER"/>
+    </input>
+  
+    <input node="Join_1">
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID_1" source="ID"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_1" source="NAME"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID_1_1" source="ID_1"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT_ID" source="CLIENT_ID"/>
+  
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_3">
+  <attributes>
+    <attribute id="SALESORDER_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SALESORDER_ID"/>
+      <keyMapping columnObjectName="Join_3" columnName="SALESORDER_ID"/>
+    </attribute>
+    <attribute id="PRODUCT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODUCT_ID"/>
+      <keyMapping columnObjectName="Join_3" columnName="PRODUCT_ID"/>
+    </attribute>
+    <attribute id="QUANTITY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUANTITY"/>
+      <keyMapping columnObjectName="Join_3" columnName="QUANTITY"/>
+    </attribute>
+    <attribute id="ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="Join_3" columnName="ID"/>
+    </attribute>
+    <attribute id="NAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="Join_3" columnName="NAME"/>
+    </attribute>
+    <attribute id="MANUFACTURER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANUFACTURER"/>
+      <keyMapping columnObjectName="Join_3" columnName="MANUFACTURER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="214" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Client" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-201" y="554"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="SalesOrder" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="25" y="554"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="SalesOrderItem" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="539" y="544"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="false" modelObjectName="Product" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="823" y="544"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-26" y="249"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Client" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="168"/>
+    </shape>
+    <shape modelObjectName="SalesOrder" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="193" y="30"/>
+      <rectangleSize width="142"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="704" y="274"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="SalesOrderItem" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="178"/>
+    </shape>
+    <shape modelObjectName="Product" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="177"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="379" y="251"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="178"/>
+    </shape>
+  
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="178"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
